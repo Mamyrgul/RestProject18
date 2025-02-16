@@ -27,27 +27,28 @@ select new java16.restproject18.dto.request.CreateMenu(m.name,m.image,m.price,m.
 """)
     List<CreateMenu> getMenuItems();
     @Query("""
-    SELECT new java16.restproject18.dto.request.CreateCategory(c.name, s.name)  
+    SELECT DISTINCT c
     FROM MenuItem m
     JOIN m.category c
-    JOIN c.subcategories s 
+    LEFT JOIN c.subcategories s
     WHERE (COALESCE(:search, '') = '' OR 
            LOWER(c.name) LIKE LOWER(CONCAT('%', :search, '%')) OR 
            LOWER(s.name) LIKE LOWER(CONCAT('%', :search, '%')))
 """)
-    List<CreateCategory> searchByCategoryOrSubcategory(@Param("search") String search);
+    List<Category> searchByCategoryOrSubcategory(@Param("search") String search);
+
 
     @Query("""
-    SELECT new java16.restproject18.dto.request.CreateCategory(c.name, s.name)
+    SELECT DISTINCT c
     FROM MenuItem m
     JOIN m.category c
-    JOIN c.subcategories s
+    LEFT JOIN c.subcategories s
     WHERE (:search IS NULL OR
            LOWER(c.name) LIKE LOWER(CONCAT('%', :search, '%')) OR
            LOWER(s.name) LIKE LOWER(CONCAT('%', :search, '%')))
       AND (:isVegetarian IS NULL OR m.isVegetarian = :isVegetarian)
 """)
-    List<CreateCategory> searchByCategoryAndVegetarian(@Param("search") String search,
-                                                       @Param("isVegetarian") Boolean isVegetarian);
+    List<Category> searchByCategoryAndVegetarian(@Param("search") String search,
+                                                 @Param("isVegetarian") Boolean isVegetarian);
 
 }

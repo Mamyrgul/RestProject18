@@ -1,9 +1,9 @@
 package java16.restproject18.service.serviceImpl;
 
 import jakarta.transaction.Transactional;
-import java16.restproject18.dto.request.CreateCategory;
 import java16.restproject18.dto.request.CreateMenu;
 import java16.restproject18.dto.response.SimpleResponse;
+import java16.restproject18.entites.Category;
 import java16.restproject18.entites.MenuItem;
 import java16.restproject18.enums.Role;
 import java16.restproject18.repository.MenuItemRepo;
@@ -86,7 +86,7 @@ public class MenuItemServiceImpl implements MenuItemService {
     }
 
     @Override
-    public List<CreateCategory> searchByCategoryOrSubcategory(String search) {
+    public List<Category> searchByCategoryOrSubcategory(String search) {
         return menuItemRepo.searchByCategoryOrSubcategory(search);
     }
 
@@ -104,7 +104,7 @@ public class MenuItemServiceImpl implements MenuItemService {
     }
 
     @Override
-    public List<CreateCategory> searchByCategoryAndVegetarian(String search, Boolean isVegetarian) {
+    public List<Category> searchByCategoryAndVegetarian(String search, Boolean isVegetarian) {
         return menuItemRepo.searchByCategoryAndVegetarian(search, isVegetarian);
     }
 
