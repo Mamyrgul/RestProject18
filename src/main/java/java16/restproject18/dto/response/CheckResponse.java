@@ -5,7 +5,6 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -14,6 +13,9 @@ import java.util.List;
 public class CheckResponse {
     String firstName;
     String lastName;
-    List<MenuItem> name;
+    String menuItemName;
     double price;
+    double taxAmount;
+    double totalAmount;
 }
+

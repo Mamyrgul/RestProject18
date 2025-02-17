@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import java16.restproject18.dto.request.CreateCheck;
 import java16.restproject18.dto.response.CheckResponse;
 import java16.restproject18.dto.response.SimpleResponse;
+import java16.restproject18.dto.response.WaiterCheck;
 import java16.restproject18.entites.Cheque;
 import java16.restproject18.entites.User;
 import java16.restproject18.enums.Role;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -46,4 +48,29 @@ public class ChequeServiceImpl implements ChequeService {
         return chequeRepo.getAllCheckResponsesByChequeId(nameUser);
     }
 
+    @Override
+    public WaiterCheck getTotalAmountForWaiterToday(Long userId, LocalDate currentDate) {
+        return chequeRepo.getTotalAmountForWaiterToday(userId, currentDate);
+    }
+
+    public SimpleResponse deleteCheque(String role, Long chequeId) {
+       if (!role.equals(Role.Chef.name()) && !role.equals(Role.Waiter.name())) {
+           throw new RuntimeException("only admin can delete check");
+       }
+        chequeRepo.deleteById(chequeId);
+       return SimpleResponse.builder().httpStatus(HttpStatus.ACCEPTED).message("successfully deleted").build();
+    }
+
+    public SimpleResponse updateCheque(String role,Cheque cheque) {
+        if (!role.equals(Role.Chef.name()) && !role.equals(Role.Waiter.name())) {
+            throw new RuntimeException("only admin can delete check");
+        }
+        Cheque cheque1 = new Cheque();
+        cheque1.setPriceAverage(cheque.getPriceAverage());
+        chequeRepo.save(cheque1);
+        return SimpleResponse.builder().httpStatus(HttpStatus.ACCEPTED).message("successfully updated").build();
+    }
+
+
 }
+
