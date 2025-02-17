@@ -20,14 +20,14 @@ public class Cheque {
     @GeneratedValue(generator = "che_gen",strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "che_gen", sequenceName = "che_gen",allocationSize = 1)
     Long id;
-    BigDecimal priceAverage;
+    double priceAverage;
     LocalDate creationDate;
     @ManyToOne
     User user;
     @ManyToMany
     List<MenuItem> menuItems;
 
-    public Cheque(BigDecimal priceAverage, LocalDate creationDate) {
+    public Cheque(double priceAverage, LocalDate creationDate) {
         this.priceAverage = priceAverage;
         this.creationDate = creationDate;
     }

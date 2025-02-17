@@ -21,6 +21,10 @@ public class StopList {
     LocalDate stopDate;
     @OneToOne
     MenuItem menuItem;
+    @PrePersist
+    protected void onCreate() {
+        stopDate = LocalDate.now();
+    }
 
     public StopList(String reason, LocalDate stopDate) {
         this.reason = reason;

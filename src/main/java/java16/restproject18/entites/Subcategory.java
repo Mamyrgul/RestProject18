@@ -23,4 +23,11 @@ public class Subcategory {
     public Subcategory(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "Subcategory{" +
+               "name='" + name + '\'' +
+               '}';
+    }
 }

@@ -15,9 +15,9 @@ public interface MenuItemService {
     CreateMenu getMenuItem(@Param("menuId") Long id);
     List<CreateMenu> getMenuItemsByRestaurantId(@Param("restaurantId") Long restaurantId);
     List<CreateMenu> getMenuItems();
-    List<Category> searchByCategoryOrSubcategory(@Param("search") String search);
+    List<MenuItem> searchByCategoryOrSubcategory(@Param("search") String search);
     List<MenuItem> sortByPrice(String order);
-    List<Category> searchByCategoryAndVegetarian(@Param("search") String search,
+    List<MenuItem> searchByCategoryAndVegetarian(@Param("search") String search,
                                                  @Param("isVegetarian") Boolean isVegetarian);
 
 }

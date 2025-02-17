@@ -5,6 +5,7 @@ import java16.restproject18.dto.request.CreateMenu;
 import java16.restproject18.dto.response.SimpleResponse;
 import java16.restproject18.entites.Category;
 import java16.restproject18.entites.MenuItem;
+import java16.restproject18.entites.Restaurant;
 import java16.restproject18.enums.Role;
 import java16.restproject18.repository.MenuItemRepo;
 import java16.restproject18.repository.RestaurantRepo;
@@ -28,7 +29,7 @@ public class MenuItemServiceImpl implements MenuItemService {
         if (!role.equals(Role.Chef.name()) && !role.equals(Role.Admin.name())) {
           throw new RuntimeException("Только админ и повар может создать меню(Chef,Admin)");
         }
-        restaurantRepo.findById(restaurantId).orElseThrow(() -> new RuntimeException("not found with this id"));
+        Restaurant restaurant=restaurantRepo.findById(restaurantId).orElseThrow(() -> new RuntimeException("not found with this id"));
 
         MenuItem menuItem = new MenuItem();
         menuItem.setName(menu.getName());
@@ -36,6 +37,7 @@ public class MenuItemServiceImpl implements MenuItemService {
         menuItem.setPrice(menu.getPrice());
         menuItem.setDescription(menu.getDescription());
         menuItem.setVegetarian(menu.isVegetarian());
+        menuItem.setRestaurant(restaurant);
         menuItemRepo.save(menuItem);
 
         return SimpleResponse.builder()
@@ -86,7 +88,7 @@ public class MenuItemServiceImpl implements MenuItemService {
     }
 
     @Override
-    public List<Category> searchByCategoryOrSubcategory(String search) {
+    public List<MenuItem> searchByCategoryOrSubcategory(String search) {
         return menuItemRepo.searchByCategoryOrSubcategory(search);
     }
 
@@ -104,7 +106,7 @@ public class MenuItemServiceImpl implements MenuItemService {
     }
 
     @Override
-    public List<Category> searchByCategoryAndVegetarian(String search, Boolean isVegetarian) {
+    public List<MenuItem> searchByCategoryAndVegetarian(String search, Boolean isVegetarian) {
         return menuItemRepo.searchByCategoryAndVegetarian(search, isVegetarian);
     }
 

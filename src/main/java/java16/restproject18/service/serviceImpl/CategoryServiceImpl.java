@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import java16.restproject18.dto.request.CreateCategory;
 import java16.restproject18.dto.response.SimpleResponse;
 import java16.restproject18.entites.Category;
+import java16.restproject18.entites.MenuItem;
 import java16.restproject18.repository.CategoryRepo;
 import java16.restproject18.repository.MenuItemRepo;
 import java16.restproject18.service.CategoryService;
@@ -20,17 +21,22 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepo categoryRepo;
     private final MenuItemRepo menuItemRepo;
     @Override
+    @Transactional
     public SimpleResponse addCategory(Long menuId, CreateCategory category) {
-        menuItemRepo.findById(menuId).orElseThrow(() -> new RuntimeException("Not found menu item"));
-        Category category1= new Category();
+        MenuItem menuItem = menuItemRepo.findById(menuId)
+                .orElseThrow(() -> new RuntimeException("Not found menu item"));
+
+        Category category1 = new Category();
         category1.setName(category.getName());
-        category1.setId(menuId);
+        category1.setMenuItem(menuItem);
+
         categoryRepo.save(category1);
         return SimpleResponse.builder()
                 .httpStatus(HttpStatus.CREATED)
                 .message("Successfully added category")
                 .build();
     }
+
 
     @Override
     public SimpleResponse deleteCategory(Long id) {

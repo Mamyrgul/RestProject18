@@ -19,7 +19,7 @@ select new java16.restproject18.dto.request.CreateMenu(m.name,m.image,m.price,m.
 """)
     CreateMenu getMenuItem(@Param("menuId") Long id);
     @Query("""
-select new java16.restproject18.dto.request.CreateMenu(m.name,m.image,m.price,m.description,m.isVegetarian) from MenuItem m where m.restaurant=:restaurantId
+select new java16.restproject18.dto.request.CreateMenu(m.name,m.image,m.price,m.description,m.isVegetarian) from MenuItem m where m.restaurant.id=:restaurantId
 """)
     List<CreateMenu> getMenuItemsByRestaurantId(@Param("restaurantId") Long restaurantId);
     @Query("""
@@ -27,28 +27,28 @@ select new java16.restproject18.dto.request.CreateMenu(m.name,m.image,m.price,m.
 """)
     List<CreateMenu> getMenuItems();
     @Query("""
-    SELECT DISTINCT c
-    FROM MenuItem m
-    JOIN m.category c
-    LEFT JOIN c.subcategories s
-    WHERE (COALESCE(:search, '') = '' OR 
-           LOWER(c.name) LIKE LOWER(CONCAT('%', :search, '%')) OR 
-           LOWER(s.name) LIKE LOWER(CONCAT('%', :search, '%')))
+    SELECT DISTINCT m 
+    FROM MenuItem m 
+    JOIN m.category c 
+    LEFT JOIN c.subcategories s 
+    WHERE 
+        (COALESCE(:search, '') = '' 
+        OR LOWER(c.name) LIKE LOWER(CONCAT('%', :search, '%')) 
+        OR LOWER(s.name) LIKE LOWER(CONCAT('%', :search, '%')))
 """)
-    List<Category> searchByCategoryOrSubcategory(@Param("search") String search);
-
+    List<MenuItem> searchByCategoryOrSubcategory(@Param("search") String search);
 
     @Query("""
-    SELECT DISTINCT c
+    SELECT DISTINCT m
     FROM MenuItem m
     JOIN m.category c
     LEFT JOIN c.subcategories s
-    WHERE (:search IS NULL OR
+    WHERE (COALESCE(:search, '') = '' OR
            LOWER(c.name) LIKE LOWER(CONCAT('%', :search, '%')) OR
            LOWER(s.name) LIKE LOWER(CONCAT('%', :search, '%')))
-      AND (:isVegetarian IS NULL OR m.isVegetarian = :isVegetarian)
+    AND (:isVegetarian IS NULL OR m.isVegetarian = :isVegetarian)
 """)
-    List<Category> searchByCategoryAndVegetarian(@Param("search") String search,
+    List<MenuItem> searchByCategoryAndVegetarian(@Param("search") String search,
                                                  @Param("isVegetarian") Boolean isVegetarian);
 
 }

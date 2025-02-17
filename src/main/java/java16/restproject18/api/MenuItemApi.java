@@ -2,7 +2,7 @@ package java16.restproject18.api;
 
 import java16.restproject18.dto.request.CreateMenu;
 import java16.restproject18.dto.response.SimpleResponse;
-import java16.restproject18.entites.Category;
+import java16.restproject18.entites.MenuItem;
 import java16.restproject18.service.MenuItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -39,11 +39,11 @@ public class MenuItemApi {
         return menuItemService.deleteMenuItem(id);
     }
     @GetMapping("/search/{search}")
-    List<Category> search(@PathVariable String search) {
+    List<MenuItem> search(@PathVariable String search) {
         return menuItemService.searchByCategoryOrSubcategory(search);
     }
     @GetMapping("/searchByGegan/{search}/{isVegan}")
-    List<Category> searchByGegan(@PathVariable String search, @PathVariable boolean isVegan) {
+    List<MenuItem> searchByGegan(@PathVariable String search, @PathVariable boolean isVegan) {
      return menuItemService.searchByCategoryAndVegetarian(search, isVegan);
     }
 

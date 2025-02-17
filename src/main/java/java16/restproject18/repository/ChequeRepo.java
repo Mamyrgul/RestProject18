@@ -1,9 +1,31 @@
 package java16.restproject18.repository;
 
+import java16.restproject18.dto.response.CheckResponse;
 import java16.restproject18.entites.Cheque;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface ChequeRepo extends JpaRepository<Cheque, Long> {
+    @Query("""
+    SELECT new java16.restproject18.dto.response.CheckResponse(
+        u.firstName,
+        u.lastName, 
+        m.name, 
+        AVG(m.price), 
+        (SUM(m.price) * 0.15), 
+        (SUM(m.price) + (SUM(m.price) * 0.15)) 
+    ) 
+    FROM Cheque c
+    JOIN c.user u
+    JOIN c.menuItems m
+    WHERE u.fullName = :nameUser
+    GROUP BY u.firstName, u.lastName, s.name
+""")
+    List<CheckResponse> getAllCheckResponsesByChequeId(@Param("nameUser") String nameUser);
+
 }

@@ -26,7 +26,8 @@ public class MenuItem {
     BigDecimal price;
     String description;
     boolean isVegetarian;
-    @OneToMany(mappedBy = "menuItem", cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.REMOVE})
+    @OneToMany(mappedBy = "menuItem", cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.REMOVE}, fetch = FetchType.EAGER)
+
     List<Category> category;
     @ManyToOne
     Restaurant restaurant;
@@ -37,5 +38,16 @@ public class MenuItem {
         this.price = price;
         this.description = description;
         this.isVegetarian = isVegetarian;
+    }
+
+    @Override
+    public String toString() {
+        return "MenuItem{" +
+               "name='" + name + '\'' +
+               ", image='" + image + '\'' +
+               ", price=" + price +
+               ", description='" + description + '\'' +
+               ", isVegetarian=" + isVegetarian +
+               '}';
     }
 }
