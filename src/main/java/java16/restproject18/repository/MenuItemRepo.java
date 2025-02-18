@@ -32,11 +32,11 @@ select new java16.restproject18.dto.request.CreateMenu(m.name,m.image,m.price,m.
     JOIN m.category c 
     LEFT JOIN c.subcategories s 
     WHERE 
-        (COALESCE(:search, '') = '' 
-        OR LOWER(c.name) LIKE LOWER(CONCAT('%', :search, '%')) 
-        OR LOWER(s.name) LIKE LOWER(CONCAT('%', :search, '%')))
+        LOWER(c.name) LIKE LOWER(CONCAT('%', :search, '%')) 
+        OR LOWER(COALESCE(s.name, '')) LIKE LOWER(CONCAT('%', :search, '%'))
 """)
     List<MenuItem> searchByCategoryOrSubcategory(@Param("search") String search);
+
 
     @Query("""
     SELECT DISTINCT m

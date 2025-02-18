@@ -6,6 +6,7 @@ import java16.restproject18.dto.response.SimpleResponse;
 import java16.restproject18.dto.response.WaiterCheck;
 import java16.restproject18.service.ChequeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -25,7 +26,11 @@ public class ChequeApi {
         return chequeService.createCheque(role,userId,check);
     }
     @GetMapping("/waiterCheck/{waiterId}/{currentDate}")
-    WaiterCheck getWaiterCheck(@PathVariable Long waiterId, @PathVariable LocalDate currentDate) {
-       return chequeService.getTotalAmountForWaiterToday(waiterId, currentDate);
+    public WaiterCheck getWaiterCheck(
+            @PathVariable Long waiterId,
+            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate currentDate
+    ) {
+        return chequeService.getTotalAmountForWaiterToday(waiterId, currentDate);
     }
+
 }

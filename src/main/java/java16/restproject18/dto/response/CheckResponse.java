@@ -1,10 +1,8 @@
 package java16.restproject18.dto.response;
 
-import java16.restproject18.entites.MenuItem;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,5 +15,6 @@ public class CheckResponse {
     double price;
     double taxAmount;
     double totalAmount;
+
 }
 

@@ -38,8 +38,8 @@ public class MenuItemApi {
     SimpleResponse delete(@PathVariable Long id) {
         return menuItemService.deleteMenuItem(id);
     }
-    @GetMapping("/search/{search}")
-    List<MenuItem> search(@PathVariable String search) {
+    @GetMapping("/search")
+    List<MenuItem> search(@RequestParam(defaultValue = "") String search) {
         return menuItemService.searchByCategoryOrSubcategory(search);
     }
     @GetMapping("/searchByGegan/{search}/{isVegan}")

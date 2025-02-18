@@ -1,7 +1,6 @@
 package java16.restproject18.repository;
 
 import java16.restproject18.dto.request.CreateCategory;
-import java16.restproject18.dto.response.SimpleResponse;
 import java16.restproject18.entites.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

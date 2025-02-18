@@ -26,8 +26,10 @@ public interface ChequeRepo extends JpaRepository<Cheque, Long> {
     JOIN c.user u
     JOIN c.menuItems m
     WHERE u.firstName = :nameUser
+    GROUP BY u.firstName, u.lastName, m.name
 """)
     List<CheckResponse> getAllCheckResponsesByChequeId(@Param("nameUser") String nameUser);
+
     @Query("""
     SELECT new java16.restproject18.dto.response.WaiterCheck(
         COALESCE(SUM(c.priceAverage), 0.0),
@@ -37,8 +39,11 @@ public interface ChequeRepo extends JpaRepository<Cheque, Long> {
     JOIN c.user u
     WHERE u.id = :userId
     AND u.role = 'Waiter'
-    AND CAST(c.creationDate AS date) = :currentDate
+    AND c.creationDate = :currentDate
 """)
-    WaiterCheck getTotalAmountForWaiterToday(@Param("userId") Long userId, @Param("currentDate") LocalDate currentDate);
+    WaiterCheck getTotalAmountForWaiterToday(
+            @Param("userId") Long userId,
+            @Param("currentDate") LocalDate currentDate
+    );
 
 }

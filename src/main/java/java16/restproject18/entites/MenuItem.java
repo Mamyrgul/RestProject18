@@ -27,7 +27,6 @@ public class MenuItem {
     String description;
     boolean isVegetarian;
     @OneToMany(mappedBy = "menuItem", cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.REMOVE}, fetch = FetchType.EAGER)
-
     List<Category> category;
     @ManyToOne
     Restaurant restaurant;
