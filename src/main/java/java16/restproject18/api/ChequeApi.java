@@ -7,6 +7,7 @@ import java16.restproject18.dto.response.WaiterCheck;
 import java16.restproject18.service.ChequeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -32,5 +33,14 @@ public class ChequeApi {
     ) {
         return chequeService.getTotalAmountForWaiterToday(waiterId, currentDate);
     }
+   @DeleteMapping("/delete/{role}/{chequeId}")
+    SimpleResponse delete(@PathVariable String role, @PathVariable Long chequeId) {
+        chequeService.deleteCheque(role,chequeId);
+        return SimpleResponse.builder()
+                .httpStatus(HttpStatus.ACCEPTED)
+                .message("success")
+                .build();
+   }
+
 
 }
