@@ -4,6 +4,7 @@ import java16.restproject18.dto.request.CreateCheck;
 import java16.restproject18.dto.response.CheckResponse;
 import java16.restproject18.dto.response.SimpleResponse;
 import java16.restproject18.dto.response.WaiterCheck;
+import java16.restproject18.entites.Cheque;
 import java16.restproject18.service.ChequeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -41,6 +42,9 @@ public class ChequeApi {
                 .message("success")
                 .build();
    }
-
+   @PutMapping("/update/{role}/{chequeId}")
+    SimpleResponse update(@PathVariable String role, @PathVariable Long chequeId, @RequestBody Cheque cheque){
+       return chequeService.updateCheque(role,chequeId,cheque);
+   }
 
 }

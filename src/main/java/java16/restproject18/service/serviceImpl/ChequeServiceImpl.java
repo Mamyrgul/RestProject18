@@ -61,11 +61,12 @@ public class ChequeServiceImpl implements ChequeService {
        return SimpleResponse.builder().httpStatus(HttpStatus.ACCEPTED).message("successfully deleted").build();
     }
 
-    public SimpleResponse updateCheque(String role,Cheque cheque) {
+    public SimpleResponse updateCheque(String role ,Long chequeId,Cheque cheque) {
         if (!role.equals(Role.Chef.name()) && !role.equals(Role.Waiter.name())) {
-            throw new RuntimeException("only admin can delete check");
+            throw new RuntimeException("only admin can update check");
         }
-        Cheque cheque1 = new Cheque();
+
+        Cheque cheque1 = chequeRepo.findById(chequeId).orElseThrow(() -> new RuntimeException("cheque not found"));
         cheque1.setPriceAverage(cheque.getPriceAverage());
         chequeRepo.save(cheque1);
         return SimpleResponse.builder().httpStatus(HttpStatus.ACCEPTED).message("successfully updated").build();

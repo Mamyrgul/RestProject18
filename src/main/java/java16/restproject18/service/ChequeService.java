@@ -15,5 +15,5 @@ public interface ChequeService {
     List<CheckResponse> getAllCheckResponsesByChequeId(@Param("nameUser") String nameUser);
     WaiterCheck getTotalAmountForWaiterToday(@Param("userId") Long userId, @Param("currentDate") LocalDate currentDate);
     public SimpleResponse deleteCheque(String role, Long chequeId);
-    public SimpleResponse updateCheque(String role, Cheque cheque);
+    public SimpleResponse updateCheque(String role ,Long chequeId, Cheque cheque);
 }
